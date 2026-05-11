@@ -87,6 +87,12 @@ body {
                 </div>
             <?php endif; ?>
 
+            <?php if(session()->getFlashdata('error')): ?>
+                <div class="alert alert-danger">
+                    <?= session()->getFlashdata('error') ?>
+                </div>
+            <?php endif; ?>
+
             <form action="<?= base_url('user/reservasi/simpan') ?>" method="post">
 
                 <!-- KENDARAAN -->
@@ -105,7 +111,7 @@ body {
                 <select name="id_mekanik"
                         id="mekanik"
                         class="form-control mb-3"
-                        required>                    
+                        required>
                     <option value="">-- Pilih Mekanik --</option>
                     <?php foreach($mekanik as $m): ?>
                         <option value="<?= $m['id_mekanik'] ?>">
@@ -132,21 +138,22 @@ body {
 
                 <!-- JADWAL -->
                 <div class="section-title"> Jadwal Servis</div>
-                <input type="date"
-                    name="tanggal"
+
+                <select name="tanggal"
                     id="tanggal"
                     class="form-control mb-2"
-                    required>                
-                    <select name="jam"
+                    required
+                    disabled>
+                    <option value="">-- Pilih tanggal --</option>
+                </select>
+
+                <select name="jam"
                     id="jam"
                     class="form-control mb-3"
-                    required>
-
-                <option value="">
-                    -- Pilih Jam --
-                </option>
-
-            </select>
+                    required
+                    disabled>
+                    <option value="">-- Pilih jam --</option>
+                </select>
                 <!-- BUTTON -->
                 <button class="btn btn-honda w-100">
                     Booking Sekarang
@@ -169,23 +176,80 @@ body {
 
 <script>
 
-function loadJam() {
+function resetTanggal(pesan) {
+    const tanggalSelect = document.getElementById('tanggal');
 
-    let tanggal = document.getElementById('tanggal').value;
-    let mekanik = document.getElementById('mekanik').value;
+    tanggalSelect.innerHTML = `<option value="">${pesan}</option>`;
+    tanggalSelect.disabled = true;
+}
+
+function resetJam(pesan) {
+    const jamSelect = document.getElementById('jam');
+
+    jamSelect.innerHTML = `<option value="">${pesan}</option>`;
+    jamSelect.disabled = true;
+}
+
+function resetMekanik(pesan) {
+    const mekanikSelect = document.getElementById('mekanik');
+
+    mekanikSelect.innerHTML = `<option value="">${pesan}</option>`;
+    mekanikSelect.disabled = true;
+}
+
+function renderTanggalTersedia(data) {
+    const tanggalSelect = document.getElementById('tanggal');
+
+    if (!data || data.length === 0) {
+        tanggalSelect.innerHTML = '<option value="">Tidak ada tanggal tersedia</option>';
+        tanggalSelect.disabled = true;
+        return;
+    }
+
+    tanggalSelect.innerHTML = '<option value="">-- Pilih tanggal --</option>';
+
+    data.forEach(function(tanggal) {
+        tanggalSelect.innerHTML += `
+            <option value="${tanggal}">${tanggal}</option>
+        `;
+    });
+
+    tanggalSelect.disabled = false;
+}
+
+function loadTanggal() {
+    const id_mekanik = document.getElementById('mekanik').value;
+    const tanggalSelect = document.getElementById('tanggal');
+
+    resetTanggal('-- Pilih mekanik terlebih dahulu --');
+    resetJam('-- Pilih tanggal terlebih dahulu --');
+
+    if (!id_mekanik) {
+        resetTanggal('-- Pilih mekanik terlebih dahulu --');
+        return;
+    }
+
+    fetch(`<?= base_url('user/cek-tanggal') ?>?mekanik=${id_mekanik}`)
+        .then(response => response.json())
+        .then(data => renderTanggalTersedia(data));
+}
+
+function loadJam() {
+    const tanggal = document.getElementById('tanggal').value;
+    const mekanik = document.getElementById('mekanik').value;
+    const jamSelect = document.getElementById('jam');
+
+    resetJam('-- Pilih jam --');
 
     if(tanggal && mekanik){
 
         fetch(
-            `<?= base_url('cek-jam') ?>?tanggal=${tanggal}&mekanik=${mekanik}`
+            `<?= base_url('user/cek-jam') ?>?tanggal=${tanggal}&mekanik=${mekanik}`
         )
 
         .then(response => response.json())
 
         .then(data => {
-
-            let jamSelect = document.getElementById('jam');
-
             jamSelect.innerHTML =
                 '<option value="">-- Pilih Jam --</option>';
 
@@ -196,6 +260,10 @@ function loadJam() {
                         Semua jam penuh
                     </option>
                 `;
+
+                jamSelect.disabled = true;
+
+                return;
 
             } else {
 
@@ -210,18 +278,30 @@ function loadJam() {
                 });
 
             }
+            jamSelect.disabled = false;
 
         });
 
+        return;
+
     }
+
+    resetJam('-- Pilih jam --');
 }
 
 // EVENT
 document.getElementById('tanggal')
-    .addEventListener('change', loadJam);
+    .addEventListener('change', function() {
+         loadJam();
+     });
 
-document.getElementById('mekanik')
-    .addEventListener('change', loadJam);
+ document.getElementById('mekanik')
+     .addEventListener('change', function() {
+         loadTanggal();
+     });
+
+resetTanggal('-- Pilih mekanik terlebih dahulu --');
+resetJam('-- Pilih tanggal terlebih dahulu --');
 
 </script>
 </body>

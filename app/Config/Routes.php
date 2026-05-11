@@ -46,7 +46,9 @@ $routes->group('user', function($routes){
     // RESERVASI
     $routes->get('reservasi', 'Reservasi::index');
     $routes->post('reservasi/simpan', 'Reservasi::simpan');
-    $routes->get('cek-jam', 'User::cek_jam');
+    $routes->get('cek-mekanik', 'Reservasi::cek_mekanik');
+    $routes->get('cek-tanggal', 'Reservasi::cek_tanggal');
+    $routes->get('cek-jam', 'Reservasi::cek_jam');
 
     // RIWAYAT
     $routes->get('riwayat', 'Riwayat::index');

@@ -87,7 +87,7 @@ class Riwayat extends BaseController
             ->first();
 
         // hanya bisa batal jika status menunggu
-        if ($booking && $booking->status === 'menunggu') {
+        if ($booking && $booking['status'] === 'menunggu') {
             $this->bookingModel->update($id_booking, [
                 'status' => 'batal'
             ]);
