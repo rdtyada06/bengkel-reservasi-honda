@@ -8,8 +8,19 @@
 
 <style>
 body {
-    background: #f5f5f5;
-    font-family: 'Segoe UI', sans-serif;
+    margin:0;
+    font-family:'Segoe UI', sans-serif;
+    
+    background:
+        linear-gradient(
+            rgba(255,255,255,0.85),
+            rgba(255,255,255,0.85)
+        ),
+        url('<?= base_url('assets/images/bengkel.png') ?>');
+
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
 }
 
 /* CONTAINER */

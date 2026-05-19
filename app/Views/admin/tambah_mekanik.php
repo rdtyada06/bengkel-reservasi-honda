@@ -10,7 +10,17 @@
 body{
     margin:0;
     font-family:'Segoe UI', sans-serif;
-    background:#f5f5f5;
+    
+    background:
+        linear-gradient(
+            rgba(255,255,255,0.85),
+            rgba(255,255,255,0.85)
+        ),
+        url('<?= base_url('assets/images/bengkel.png') ?>');
+
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
 }
 
 /* SIDEBAR */
@@ -211,10 +221,6 @@ body{
 
                     <div class="input-group">
 
-                        <span class="input-group-text">
-                            👨‍🔧
-                        </span>
-
                         <input type="text"
                                name="nama_mekanik"
                                class="form-control"
@@ -234,10 +240,6 @@ body{
 
                     <div class="input-group">
 
-                        <span class="input-group-text">
-                            📞
-                        </span>
-
                         <input type="text"
                                name="no_hp"
                                class="form-control"
@@ -253,14 +255,14 @@ body{
 
                     <button class="btn btn-honda">
 
-                        💾 Simpan Mekanik
+                         Simpan Mekanik
 
                     </button>
 
                     <a href="<?= base_url('admin/mekanik') ?>"
                        class="btn btn-secondary btn-back">
 
-                        ← Kembali
+                        Kembali
 
                     </a>
 

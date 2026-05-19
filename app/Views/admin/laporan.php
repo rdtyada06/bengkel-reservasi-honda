@@ -11,7 +11,17 @@
 body{
     margin:0;
     font-family:'Segoe UI', sans-serif;
-    background:#f5f5f5;
+    
+    background:
+        linear-gradient(
+            rgba(255,255,255,0.85),
+            rgba(255,255,255,0.85)
+        ),
+        url('<?= base_url('assets/images/bengkel.png') ?>');
+
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
 }
 
 /* SIDEBAR */
@@ -168,29 +178,29 @@ body{
     <h5>ADMIN HONDA</h5>
 
     <a href="<?= base_url('admin/dashboard') ?>">
-        🏠 Dashboard
+         Dashboard
     </a>
 
     <a href="<?= base_url('admin/booking') ?>">
-        📋 Booking
+         Booking
     </a>
 
     <a href="<?= base_url('admin/mekanik') ?>">
-        👨‍🔧 Mekanik
+         Mekanik
     </a>
 
     <a href="<?= base_url('admin/layanan') ?>">
-        🛠️ Layanan
+         Layanan
     </a>
 
     <a href="<?= base_url('admin/laporan') ?>" class="active">
-        📊 Laporan
+         Laporan
     </a>
 
     <hr>
 
     <a href="<?= base_url('logout') ?>">
-        🚪 Logout
+         Logout
     </a>
 
 </div>
