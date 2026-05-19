@@ -10,7 +10,17 @@
 body{
     margin:0;
     font-family:'Segoe UI', sans-serif;
-    background:#f5f5f5;
+    
+    background:
+        linear-gradient(
+            rgba(255,255,255,0.85),
+            rgba(255,255,255,0.85)
+        ),
+        url('<?= base_url('assets/images/bengkel.png') ?>');
+
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
 }
 
 /* SIDEBAR */
@@ -135,6 +145,10 @@ body{
          Layanan
     </a>
 
+    <a href="<?= base_url('admin/laporan') ?>">
+         Laporan
+    </a>
+
     <hr>
 
     <a href="<?= base_url('logout') ?>">
@@ -252,7 +266,7 @@ body{
                                     <a href="<?= base_url('admin/mekanik/edit/'.$m['id_mekanik']) ?>"
                                        class="btn btn-warning btn-sm btn-action">
 
-                                        ✏ Edit
+                                         Edit
 
                                     </a>
 
@@ -260,7 +274,7 @@ body{
                                        class="btn btn-danger btn-sm btn-action"
                                        onclick="return confirm('Yakin ingin menghapus mekanik ini?')">
 
-                                        🗑 Hapus
+                                         Hapus
 
                                     </a>
 

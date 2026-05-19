@@ -11,7 +11,17 @@
 body{
     margin:0;
     font-family:'Segoe UI', sans-serif;
-    background:#f5f5f5;
+    
+    background:
+        linear-gradient(
+            rgba(255,255,255,0.85),
+            rgba(255,255,255,0.85)
+        ),
+        url('<?= base_url('assets/images/bengkel.png') ?>');
+
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
 }
 
 /* SIDEBAR */
@@ -150,7 +160,7 @@ body{
     <!-- HEADER -->
     <div class="page-title mb-4">
 
-        <h3>Halo Admin 👋</h3>
+        <h3>Halo Admin </h3>
 
         <p>
             Ringkasan data sistem reservasi bengkel Honda
